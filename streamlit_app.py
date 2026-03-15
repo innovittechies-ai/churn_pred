@@ -3,14 +3,18 @@ import pandas as pd
 import numpy as np
 import pickle
 from datetime import datetime
+import os
 
 # Page Configuration
-st.set_page_config(
-    page_title="Churn Prediction System",
-    page_icon="📊",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+try:
+    st.set_page_config(
+        page_title="Churn Prediction System",
+        page_icon="📊",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+except:
+    pass
 
 # Custom CSS
 st.markdown("""
@@ -52,11 +56,11 @@ def load_model_resources():
         scaler = pickle.load(open('scaler.pkl', 'rb'))
         encoders = pickle.load(open('encoders.pkl', 'rb'))
         features = pickle.load(open('feature_columns.pkl', 'rb'))
-        return model, scaler, encoders, features
+        return model, scaler, encoders, features, None
     except FileNotFoundError as e:
-        st.error(f"❌ Missing file: {e.filename}")
-        st.info("Please run model_saver.py to generate the model files.")
-        return None, None, None, None
+        return None, None, None, None, f"Missing: {e.filename}"
+    except Exception as e:
+        return None, None, None, None, f"Error loading model: {str(e)}"
 
 # ==========================================
 # PREDICTION FUNCTION
@@ -163,10 +167,12 @@ def main():
     st.markdown("<h1 class='main-header'>📊 Telecom Churn Prediction System</h1>", unsafe_allow_html=True)
     
     # Load model resources
-    model, scaler, encoders, features = load_model_resources()
+    model, scaler, encoders, features, error = load_model_resources()
     
     if model is None:
-        st.stop()
+        st.error(f"❌ {error}")
+        st.info("Please ensure model files exist: logistic_churn_model.pkl, scaler.pkl, encoders.pkl, feature_columns.pkl")
+        return
     
     # Sidebar - Demo selector
     st.sidebar.title("🚀 Quick Start")
