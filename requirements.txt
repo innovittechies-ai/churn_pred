@@ -1,12 +1,9 @@
+streamlit
 pandas
 numpy
 scikit-learn
 xgboost
 imbalanced-learn
-streamlit>=1.36.0
 matplotlib
 seaborn
-altair>=5.0.0
-openpyxl
-protobuf>=5.0.0
-google-protobuf>=5.0.0
+altair
