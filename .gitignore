@@ -28,6 +28,7 @@ venv/
 ENV/
 env/
 .venv
+envs/
 
 # IDE
 .vscode/
@@ -37,14 +38,10 @@ env/
 *~
 .DS_Store
 
-# Data files (optional - uncomment if needed)
-# *.xlsx
-# *.csv
-# *.xls
-
 # Streamlit
 .streamlit/secrets.toml
-.streamlit/*.toml.bak
+.streamlit/cache/
+.streamlit/*.log
 
 # Testing
 .pytest_cache/
@@ -53,3 +50,7 @@ htmlcov/
 
 # Logs
 *.log
+
+# OS
+.DS_Store
+Thumbs.db

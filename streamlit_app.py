@@ -324,30 +324,16 @@ def main():
     with col2:
         # Load sample
         if demo_choice != "Custom Input":
-            if st.button("📋 Load Sample", use_container_width=True):
-                sample = SAMPLE_CUSTOMERS[demo_choice]
-                st.session_state.update({f"{key}_key": value for key, value in [
-                    ('gender', sample['Gender']),
-                    ('senior', sample['Senior Citizen']),
-                    ('partner', sample['Partner']),
-                    ('dependents', sample['Dependents']),
-                    ('tenure', sample['Tenure Months']),
-                    ('phone', sample['Phone Service']),
-                    ('lines', sample['Multiple Lines']),
-                    ('internet', sample['Internet Service']),
-                    ('security', sample['Online Security']),
-                    ('backup', sample['Online Backup']),
-                    ('device', sample['Device Protection']),
-                    ('tech', sample['Tech Support']),
-                    ('tv', sample['Streaming TV']),
-                    ('movies', sample['Streaming Movies']),
-                    ('contract', sample['Contract']),
-                    ('paperless', sample['Paperless Billing']),
-                    ('payment', sample['Payment Method']),
-                    ('monthly', sample['Monthly Charges']),
-                    ('total', sample['Total Charges']),
-                ]})
-                st.rerun()
+            st.info("📋 Sample customer pre-loaded in sidebar")
+            sample = SAMPLE_CUSTOMERS[demo_choice]
+            
+            st.write("**Sample Data:**")
+            st.json({
+                'Contract': sample['Contract'],
+                'Tenure Months': sample['Tenure Months'],
+                'Monthly Charges': sample['Monthly Charges'],
+                'Services': f"{sum([v == 'Yes' for v in [sample[k] for k in ['Phone Service', 'Online Security', 'Online Backup', 'Device Protection', 'Tech Support', 'Streaming TV', 'Streaming Movies']]])} services"
+            })
     
     # Footer
     st.write("---")
